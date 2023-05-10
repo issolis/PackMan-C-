@@ -12,6 +12,7 @@ int posxE1=0;
 int posYE1=0;
 int blocks=53;
 bool inPower=false;
+bool powerTaken=false;
 
 QVariant level=1;
 QVariant dirY=1;
@@ -129,7 +130,12 @@ void widget:: defineRouteFirstEnemy(){
         i++;
     }
     int conversionPos=((220+enemy1->pos().x())/20+(140+enemy1->pos().y())/20*22)+1;
-    int x=((220+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
+    int x = 0;
+    if(!powerTaken){
+        x=((220+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
+    }else{
+        x=((220+  power->findNode(IDPower.toInt())->item1->pos().x())/20+(140+  power->findNode(IDPower.toInt())->item1->pos().y())/20*22)+1;
+    }
     list->findRoute(conversionPos, x);
 
     pathFindingNode *auxEnd;
@@ -192,6 +198,7 @@ void widget::MoveFirstEnemy(){
                 if(IDList.head==nullptr){
                     came=true;
                     controler=true;
+                    powerTaken=false;
                 }
 
                 enemy1->setPos(x, y);
@@ -347,13 +354,14 @@ void widget:: checkPoints(){
                 if(pointsVisited.findNode(i)->id!=i)
                     totalPoints=totalPoints.toInt()+10;
                 pointsVisited.insert(i);
-                if(totalPoints.toInt()%200==0 && auxTotalPoints!=totalPoints){
+                if(totalPoints.toInt()%200==0 && auxTotalPoints!=totalPoints && !powerTaken){
                     power->findNode(IDPower.toInt())->item1->setPixmap(QPixmap (":fruit.png"));
                     int x=randNumber();
                     power->findNode(IDPower.toInt())->item1->setPos(adapPosX(x),adapPosY(x));
                     scene->addItem(power->findNode(IDPower.toInt())->item1);
                     IDPower=IDPower.toInt()+1;
                     auxTotalPoints=totalPoints;
+                    powerTaken=true;
                 }
             }
              i++;

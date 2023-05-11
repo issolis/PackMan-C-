@@ -4,25 +4,40 @@
 #include <vector>
 #include <climits>
 #include "listback.h"
+#include <QString>
 
-const int N = 10;
+
+const int N = 22;
+const int m = 15;
+
 
 class backTraking
 {
 public:
-    backTraking(int arr[N][N]);
+    backTraking(int arr[N][m]);
     void backtrack(int x, int y, int distance, int end_x, int end_y,listBack path);
 
 
     int shortestPathLength;
 
+
     listBack shortestPath;
-    listBack findShortestPath(int start_x, int start_y, int end_x, int end_y);
+    listBack id_list;
+
+
+
+    nodeBack *a;
+    listBack auxFindShortestPath(int start_x, int start_y, int end_x, int end_y);
+    listBack findShortestPath(int beggining, int final);
+
+
+
+
 
 
 private:
-    const int MAX_SIZE = 10;
-    int grid[N][N];
+
+    int grid[N][m];
 
 
 

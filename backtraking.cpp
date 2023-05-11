@@ -1,15 +1,17 @@
 #include "backtraking.h"
 #include <iostream>
 #include <cstring>
+#include <QDebug>
+
 
 using namespace std;
-listBack ultimapath;
 
 
 
-backTraking::backTraking(int arr[N][N]) {
+
+backTraking::backTraking(int arr[N][m]) {
     for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
+        for (int j = 0; j < m; j++) {
             grid[i][j] = arr[i][j];
         }
     }
@@ -124,6 +126,7 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
             backtrack(x, y-1, distance + abs(value - newValue), end_x, end_y, path);
             path.deleteNode();
 
+
             grid[x][y-1] = newValue;
         }else {
             if (!canMoveLeft && x>0) {
@@ -148,10 +151,21 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
         if ( distance < shortestPathLength){
 
             shortestPathLength = distance;
-            shortestPath.addToGlobalList(path);
+
+            if(path.hasDuplicates()==false){
+                shortestPath.addToGlobalList(path,id_list);
+                shortestPath.printPath(shortestPath);
+
+
+
+            }
+
+
+
 
 
         }
+
         return ;
 
 
@@ -165,15 +179,29 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
 
 
 }
-listBack backTraking::findShortestPath(int start_x, int start_y, int end_x, int end_y) {
+listBack backTraking::auxFindShortestPath(int start_x, int start_y, int end_x, int end_y) {
     listBack path;
     path.add(start_x, start_y);
     backtrack(start_x, start_y, 0, end_x, end_y, path);
 
-    path.printPath(shortestPath);
-    return shortestPath;
+
+    id_list.addL(shortestPath);
+    id_list.printId();
+    return id_list;
 
 
 
 
 }
+listBack backTraking::findShortestPath(int beggining, int final ){
+    int xB=(beggining-1)/22;
+    int yB=(beggining-1)%22;
+    int xF=(final-1)/22;
+    int yF=(final-1)%22;
+
+    return auxFindShortestPath(xB,yB,xF,yF);
+}
+
+
+
+

@@ -37,7 +37,11 @@ int main(int argc, char *argv[])
     //manager->waitConnection();
     widget w;
     //w.Server=manager->server;
-    w.show();
+    //w.show();
+
+    pathFindingList list;
+    list.buildMatrix(15,22);
+    list.findRoute(1,186);
 
     return a.exec();
 

@@ -7,31 +7,11 @@
 
 int posXL1 [54]={-120,-100,-80 ,-60 , -40,-20 ,0   ,-60 ,-60,-60,-60,-120,-100,-80 ,-60 , -40,-20 ,0,40,40,40,40,40,40,60,80,100,120,120,120,120,120,120,-40,-40,-40,-40,-40,-20,0,-20,0,40,40,40,40,40,60,80,60,80,60,80};
 int posYL1 [54]={-120,-120,-120,-120,-120,-120,-120,-100,-80,-60,-40,-20 ,-20 ,-20 ,-20 ,-20 ,-20 ,-20,-120,-100,-80,-60,-40,-20,-100,-80,-100,-120,-100,-80,-60,-40,-20,20,40,60,80,100, 20,20,100,100,20,40,60,80,100,20,20,60,60,100,100};
-
-int posxE1=0;
-int posYE1=0;
-int blocks=53;
-bool inPower=false;
-bool powerTaken=false;
-
-QVariant level=1;
-QVariant dirY=1;
-QVariant dirX=1;
-QVariant dirZ=1;
-QVariant lifes=3;
-QVariant totalPoints=0;
-QVariant auxTotalPoints=0;
-QVariant IDPower=0;
-
-QVariant counter=0;
-bool came=true;
-bool came1=true;
-bool controler=true;
-listID IDList;
-listID IDList1;
-bool tryToFixTheBug=false;
-bool keyUnlocked=false;
-
+bool  enemiesScaping=false;
+bool enemy1Catched=false;
+bool enemy2Catched=false;
+bool enemy3Catched=false;
+bool enemy4Catched=false;
 widget::widget(QWidget *parent)
     : QWidget(parent)
 {
@@ -48,11 +28,14 @@ widget::widget(QWidget *parent)
     QPixmap myPixmap(":g1.png");
     enemy1 = new QGraphicsPixmapItem(myPixmap);
     enemy2 = new QGraphicsPixmapItem(myPixmap);
+    enemy3 = new QGraphicsPixmapItem(myPixmap);
+    enemy4 = new QGraphicsPixmapItem(myPixmap);
     QPixmap myPixma (":pac.png");
     pacman= new QGraphicsPixmapItem(myPixma);
     points.insert(277);
     power=new blockList();
     power->insert(70);
+
 
     QObject::connect(b_LevelI, &QPushButton::clicked, [&]{
         bL1_Clicked();
@@ -104,24 +87,29 @@ void widget::bL1_Clicked(){
     }
 
     scene->addItem(enemy1);
-    //scene->addItem(enemy2);
+    scene->addItem(enemy2);
+    scene->addItem(enemy3);
+    scene->addItem(enemy3);
     scene->addItem(pacman);
 
+    enemy3->setPos(-1000,-1000);
+    enemy4->setPos(-1000,-1000);
     pacman->setPos(-120,0);
     colocatePoints();
-    MoveFirstEnemy();
+    // MoveFirstEnemy();
     //MoveSecondEnemy();
     movePlayer();
     checkPoints();
     checkCollision();
     label();
-    //server();
+    server();
+    catched();
 
 }
 
 void widget:: defineRouteFirstEnemy(){
     pathFindingList *list=new pathFindingList;
-    list->buildMatrix(14,22);
+    list->buildMatrix(15,22);
     list->makeItTrue();
 
     int i=0;
@@ -129,13 +117,16 @@ void widget:: defineRouteFirstEnemy(){
         list->findNode (((220+posXL1[i])/20+(140+posYL1[i])/20*22)+1)->closed=true;
         i++;
     }
+    list->show();
     int conversionPos=((220+enemy1->pos().x())/20+(140+enemy1->pos().y())/20*22)+1;
     int x = 0;
     if(!powerTaken){
         x=((220+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
     }else{
-        x=((220+  power->findNode(IDPower.toInt())->item1->pos().x())/20+(140+  power->findNode(IDPower.toInt())->item1->pos().y())/20*22)+1;
+        x=((220+  power->findNode(IDPower.toInt()-1)->item1->pos().x())/20+(140+  power->findNode(IDPower.toInt()-1)->item1->pos().y())/20*22)+1;
     }
+    if(enemiesScaping==true)
+        x=randNumber();
     list->findRoute(conversionPos, x);
 
     pathFindingNode *auxEnd;
@@ -155,7 +146,7 @@ void widget:: defineRouteFirstEnemy(){
 
 void widget:: defineRouteSecondEnemy(){
     pathFindingList *list=new pathFindingList;
-    list->buildMatrix(14,22);
+    list->buildMatrix(15,22);
     list->makeItTrue();
 
     int i=0;
@@ -164,7 +155,14 @@ void widget:: defineRouteSecondEnemy(){
         i++;
     }
     int conversionPos=((220+enemy2->pos().x())/20+(140+enemy2->pos().y())/20*22)+1;
-    int x=((220+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
+    int x=0;
+    if(!powerTaken){
+        x=((220+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
+    }else{
+        x=((220+power->findNode(IDPower.toInt()-1)->item1->pos().x())/20+(140+  power->findNode(IDPower.toInt()-1)->item1->pos().y())/20*22)+1;
+    }
+    if(enemiesScaping)
+        x=randNumber();
     list->findRoute(conversionPos, x);
 
     pathFindingNode *auxEnd;
@@ -181,6 +179,12 @@ void widget:: defineRouteSecondEnemy(){
     came1=false;
 }
 
+void widget::defineRouteThirdEnemy(){
+   qDebug()<<"";
+
+
+}
+
 void widget::MoveFirstEnemy(){
     int x; int y;
     QTimer *timer = new QTimer();
@@ -190,25 +194,25 @@ void widget::MoveFirstEnemy(){
             defineRouteFirstEnemy();
         }
         else{
-            if(IDList.numberElements!=0){
-                x=adapPosX(IDList.head->id);
-                y=adapPosY(IDList.head->id);
+            if(!enemy1Catched){
+                if(IDList.numberElements!=0){
+                    x=adapPosX(IDList.head->id);
+                    y=adapPosY(IDList.head->id);
 
-                IDList.deleteFirst();
-                if(IDList.head==nullptr){
-                    came=true;
-                    controler=true;
-                    powerTaken=false;
+                    IDList.deleteFirst();
+                    if(IDList.head==nullptr){
+                        came=true;
+                    }
+
+                    enemy1->setPos(x, y);
                 }
-
-                enemy1->setPos(x, y);
-            }
-            else{
-                came=true;
+                else{
+                    came=true;
+                }
             }
         }
     });
-    timer->start(220);
+    timer->start(250);
 
 }
 
@@ -221,21 +225,23 @@ void widget::MoveSecondEnemy(){
             defineRouteSecondEnemy();
         }
         else{
-            if(IDList.numberElements!=0){
-                x=adapPosX(IDList1.head->id);
-                y=adapPosY(IDList1.head->id);
+            if(!enemy2Catched){
+                if(IDList1.numberElements!=0){
+                    x=adapPosX(IDList1.head->id);
+                    y=adapPosY(IDList1.head->id);
 
-                IDList1.deleteFirst();
-                if(IDList1.head==nullptr){
+                    IDList1.deleteFirst();
+                    if(IDList1.head==nullptr){
+                        came1=true;
+                    }
+                    enemy2->setPos(x, y);
+                }else{
                     came1=true;
                 }
-                enemy2->setPos(x, y);
-            }else{
-                came1=true;
             }
         }
     } );
-    timer->start(10);
+    timer->start(200);
 }
 
 int widget::randNumber(){
@@ -244,7 +250,7 @@ int widget::randNumber(){
         again=false;
         int rand=QRandomGenerator::global()->bounded(1, 301);
         while(i!=blocks){
-            if((adapPosX(rand)==posXL1[i] && adapPosY(rand)==posYL1[i])){
+            if((noPutIt(1,rand))){
                 again=true;
                 break;
             } i++;
@@ -268,43 +274,43 @@ int widget::adapPosY(int id){
 void widget::movePlayer(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
-        if(!keyUnlocked){
-            int conversionPos;
-            if(direcction==1){
-                conversionPos=((240+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
-                if (!noPutIt(1, conversionPos))
-                    pacman->setPos(pacman->pos().x()+20, pacman->pos().y());
-                if(pacman->pos().x()>200){
-                    pacman->setPos(-220, pacman->pos().y());
-                }
-            }
-            if(direcction==2){
-                conversionPos=((200+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
-                if (!noPutIt(1, conversionPos))
-                    pacman->setPos(pacman->pos().x()-20, pacman->pos().y());
-                if(pacman->pos().x()<-220){
-                    pacman->setPos(200, pacman->pos().y());
-                }
-            }
-            if(direcction==3){
-                conversionPos=((220+pacman->pos().x())/20+(120+pacman->pos().y())/20*22)+1;
-                if (!noPutIt(1, conversionPos))
-                    pacman->setPos(pacman->pos().x(), pacman->pos().y()-20);
-                if(pacman->pos().y()<-140){
-                    pacman->setPos( pacman->pos().x(),120);
-                }
 
+        int conversionPos;
+        if(direcction==1){
+            conversionPos=((240+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
+            if (!noPutIt(1, conversionPos))
+                pacman->setPos(pacman->pos().x()+20, pacman->pos().y());
+            if(pacman->pos().x()>200){
+                pacman->setPos(-220, pacman->pos().y());
             }
-            if(direcction==4){
-                conversionPos=((220+pacman->pos().x())/20+(160+pacman->pos().y())/20*22)+1;
-                if (!noPutIt(1, conversionPos))
-                    pacman->setPos(pacman->pos().x(), pacman->pos().y()+20);
-                if(pacman->pos().y()>120){
-                    pacman->setPos(pacman->pos().x(),-140);
-                }
+        }
+        if(direcction==2){
+            conversionPos=((200+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
+            if (!noPutIt(1, conversionPos))
+                pacman->setPos(pacman->pos().x()-20, pacman->pos().y());
+            if(pacman->pos().x()<-220){
+                pacman->setPos(200, pacman->pos().y());
+            }
+        }
+        if(direcction==3){
+            conversionPos=((220+pacman->pos().x())/20+(120+pacman->pos().y())/20*22)+1;
+            if (!noPutIt(1, conversionPos))
+                pacman->setPos(pacman->pos().x(), pacman->pos().y()-20);
+            if(pacman->pos().y()<-140){
+                pacman->setPos( pacman->pos().x(),120);
+            }
+
+        }
+        if(direcction==4){
+            conversionPos=((220+pacman->pos().x())/20+(160+pacman->pos().y())/20*22)+1;
+            if (!noPutIt(1, conversionPos))
+                pacman->setPos(pacman->pos().x(), pacman->pos().y()+20);
+            if(pacman->pos().y()>120){
+                pacman->setPos(pacman->pos().x(),-140);
             }
         }
     }
+
     );
     timer->start(250);
 }
@@ -334,7 +340,6 @@ bool widget:: noPutIt(int level, int ID){
     if(level==1){
         while(i!=blocks){
             if (adapPosX(ID)==posXL1[i] && adapPosY(ID)==posYL1[i]){
-
                 return true;}
             i++;
         }
@@ -354,7 +359,9 @@ void widget:: checkPoints(){
                 if(pointsVisited.findNode(i)->id!=i)
                     totalPoints=totalPoints.toInt()+10;
                 pointsVisited.insert(i);
-                if(totalPoints.toInt()%200==0 && auxTotalPoints!=totalPoints && !powerTaken){
+
+
+                if((totalPoints.toInt()-auxTotalPoints.toInt())>=200  && auxTotalPoints!=totalPoints && !powerTaken && !enemiesScaping){
                     power->findNode(IDPower.toInt())->item1->setPixmap(QPixmap (":fruit.png"));
                     int x=randNumber();
                     power->findNode(IDPower.toInt())->item1->setPos(adapPosX(x),adapPosY(x));
@@ -363,8 +370,9 @@ void widget:: checkPoints(){
                     auxTotalPoints=totalPoints;
                     powerTaken=true;
                 }
+
             }
-             i++;
+            i++;
         }
 
     }
@@ -377,70 +385,75 @@ void widget:: server(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
         QString s=Server->socket->readAll();
+
         if(keyUnlocked){
             if(!s.isEmpty() ){
 
 
                 int conversionPos;
                 if(s=="\u0001"){
-                    conversionPos=((240+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
-                    if (!noPutIt(1, conversionPos))
-                        pacman->setPos(pacman->pos().x()+20, pacman->pos().y());
-                    if(pacman->pos().x()>200){
-                        pacman->setPos(-220, pacman->pos().y());
-                    }
+                    direcction=1;
                 }
                 else if(s=="\u0002"){
-                    conversionPos=((200+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
-                    if (!noPutIt(1, conversionPos))
-                        pacman->setPos(pacman->pos().x()-20, pacman->pos().y());
-                    if(pacman->pos().x()<-220){
-                        pacman->setPos(200, pacman->pos().y());
-                    }
+                    direcction=2;
                 }
                 else if(s=="\u0003"){
-                    conversionPos=((220+pacman->pos().x())/20+(120+pacman->pos().y())/20*22)+1;
-                    if (!noPutIt(1, conversionPos))
-                        pacman->setPos(pacman->pos().x(), pacman->pos().y()-20);
-                    if(pacman->pos().y()<-140){
-                        pacman->setPos( pacman->pos().x(),120);
-                    }
+                    direcction=3;
 
                 }
                 else if(s=="\u0004"){
-                    conversionPos=((220+pacman->pos().x())/20+(160+pacman->pos().y())/20*22)+1;
-                    if (!noPutIt(1, conversionPos))
-                        pacman->setPos(pacman->pos().x(), pacman->pos().y()+20);
-                    if(pacman->pos().y()>120){
-                        pacman->setPos(pacman->pos().x(),-140);
-                    }
+                    direcction=4;
                 }
             }
         }
+
     });
-    timer->start(250);
+    timer->start(200);
 }
 
 void widget:: checkCollision(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
-        if(pacman->pos()==enemy1->pos()){
-            lifes=lifes.toInt()-1;
-            int x=randNumber();
-            pacman->setPos(adapPosX(x),adapPosY(x));
-            if(lifes==0){
-                QLabel *label = new QLabel("Perdiste", this);
-                label->setAlignment(Qt::AlignCenter);
-                label->setFixedSize(200, 50);
-                label->show();
-                label->move(220,140);
-                label->setStyleSheet("background-color: red;");
+        if(pacman->pos()==enemy1->pos() || pacman->pos()==enemy2->pos() ||pacman->pos()==enemy3->pos() || pacman->pos()==enemy4->pos()){
+            qDebug()<<"Entro";
+            if(!enemiesScaping){
+                lifes=lifes.toInt()-1;
+                int x=randNumber();
+                pacman->setPos(adapPosX(x),adapPosY(x));
+                if(lifes==0){
+                    QLabel *label = new QLabel("Perdiste", this);
+                    label->setAlignment(Qt::AlignCenter);
+                    label->setFixedSize(200, 50);
+                    label->show();
+                    label->move(220,140);
+                    label->setStyleSheet("background-color: red;");
 
-                QTimer::singleShot(5000, [=]() {
-                    close();
-                });
+                    QTimer::singleShot(5000, [=]() {
+                        close();
+                    });
 
+                }
             }
+            else{
+                totalPoints=totalPoints.toInt()+50;
+                if(pacman->pos()==enemy1->pos()){
+                    enemy1Catched=true;
+                    desapairEnemy1(enemy1);
+                }
+                else if(pacman->pos()==enemy2->pos()){
+                    enemy1Catched=true;
+                    desapairEnemy2(enemy2);
+                }
+                else if(pacman->pos()==enemy3->pos()){
+                    enemy1Catched=true;
+                    desapairEnemy3(enemy3);
+                }
+                else if(pacman->pos()==enemy4->pos()){
+                    enemy1Catched=true;
+                    desapairEnemy4(enemy4);
+                }
+            }
+
         }
     });
     timer->start(10);
@@ -459,3 +472,54 @@ void widget:: label(){
     timer->start(10);
 }
 
+void widget:: catched(){
+    QTimer *timer = new QTimer();
+    QObject::connect(timer, &QTimer::timeout, [&]() {
+        if(IDPower!=0){
+            if( power->findNode(IDPower.toInt()-1)->item1->pos()==enemy1->pos() ){
+                power->findNode(IDPower.toInt()-1)->item1->setPos(-1000,-1000);
+                powerTaken=false;
+            }
+            if(pacman->pos()==power->findNode(IDPower.toInt()-1)->item1->pos()){
+                auxTotalPoints=totalPoints;
+                enemiesScaping=true;
+                power->findNode(IDPower.toInt()-1)->item1->setPos(-1000,-1000);
+                powerTaken=false;
+                QTimer::singleShot(10000, [=]() {
+                    enemiesScaping=false;
+                });
+            }
+        }
+
+    });
+    timer->start(10);
+}
+
+void widget:: desapairEnemy1(QGraphicsPixmapItem *item){
+    item->setPos(-1000,-1000);
+
+    QTimer::singleShot(5000, [=]() {
+        enemy1Catched=false;
+    });
+}
+void widget:: desapairEnemy2(QGraphicsPixmapItem *item){
+    item->setPos(-1000,-1000);
+
+    QTimer::singleShot(5000, [=]() {
+        enemy2Catched=false;
+    });
+}
+void widget:: desapairEnemy3(QGraphicsPixmapItem *item){
+    item->setPos(-1000,-1000);
+
+    QTimer::singleShot(5000, [=]() {
+        enemy3Catched=false;
+    });
+}
+void widget:: desapairEnemy4(QGraphicsPixmapItem *item){
+    item->setPos(-1000,-1000);
+
+    QTimer::singleShot(5000, [=]() {
+        enemy4Catched=false;
+    });
+}

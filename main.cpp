@@ -13,9 +13,12 @@ class serverManager{
 public:
 
     LocalServer *server;
+    LocalServer *server1;
     serverManager(){
         server=new LocalServer();
-        server->listen(QHostAddress::Any, 1234);
+        server->listen(QHostAddress::Any, 5000);
+        server1=new LocalServer();
+        server1->listen(QHostAddress::Any, 3000);
     }
 
     void waitConnection(){
@@ -28,20 +31,28 @@ public:
         }
 
     }
+    void waitConnection1(){
+        while (true) {
+            if (server1->waitForNewConnection()) {
+                qDebug()<<("Connected");
+                break;
+            }
+            QThread::msleep(0.001);
+        }
+
+    }
 };
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+   QApplication a(argc, argv);
+   serverManager *manager= new serverManager();
+   manager->waitConnection();
+   //manager->waitConnection1();
+   widget w;
+   w.Server=manager->server;
+   w.show();
 
-    serverManager *manager= new serverManager();
-    //manager->waitConnection();
-    widget w;
-    //w.Server=manager->server;
-    //w.show();
 
-    pathFindingList list;
-    list.buildMatrix(15,22);
-    list.findRoute(1,186);
 
     return a.exec();
 

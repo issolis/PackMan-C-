@@ -83,7 +83,7 @@ void pathFindingList::show(){
     while(i!=rows){
         while(aux!=nullptr){
 
-            std::cout<<aux->closed<<" "<<aux->id<<" ";
+            std::cout<<aux->closed<<" ";
             aux=aux->right;
         }
         std::cout<<std::endl;

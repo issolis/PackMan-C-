@@ -13,6 +13,9 @@
 #include <QTimer>
 #include <listid.h>
 #include <localserver.h>
+#include <listback.h>
+#include <backtraking.h>
+
 
 class widget : public QWidget
 {
@@ -20,14 +23,7 @@ class widget : public QWidget
 
 public:
     explicit widget(QWidget *parent = nullptr);
-    QGraphicsView *view;
-    QGraphicsScene *scene;
-    QPushButton *b_LevelI = new QPushButton("Level I");
-    QGraphicsProxyWidget *L1;
-    blockList list;
-    pathFindingList listMatL1;
-    QGraphicsPixmapItem *enemy1;
-    QGraphicsPixmapItem *enemy2;
+
     blockList *power;
     QGraphicsPixmapItem *pacman;
     void bL1_Clicked();
@@ -37,8 +33,7 @@ public:
     void MoveSecondEnemy();
     void defineRouteFirstEnemy();
     void defineRouteSecondEnemy();
-    int *vecMove;
-    int randNumber();
+    void defineRouteThirdEnemy();
     void movePlayer();
     void colocatePoints();
     QVariant direcction=1;
@@ -47,11 +42,56 @@ public:
     listID poinstGotten;
     void checkPoints();
     void server();
-    LocalServer *Server;
     int determinateDirecction(QString comas);
     void checkCollision();
     void label();
+    void catched();
+    int randNumber();
+    int randNumber(int range);
     listID pointsVisited;
+
+
+    int posxE1=0;
+    int posYE1=0;
+    int blocks=53;
+    bool inPower=false;
+    bool powerTaken=false;
+
+    int *vecMove;
+    LocalServer *Server;
+    QVariant level=1;
+    QVariant lifes=3;
+    QVariant totalPoints=0;
+    QVariant auxTotalPoints=0;
+    QVariant IDPower=1;
+
+    QVariant counter=0;
+    bool came=true;
+    bool came1=true;
+    bool controler=true;
+    listID IDList;
+    listID IDList1;
+    listBack IDList2;
+
+    void desapairEnemy1(QGraphicsPixmapItem *item);
+    void desapairEnemy2(QGraphicsPixmapItem *item);
+    void desapairEnemy3(QGraphicsPixmapItem *item);
+    void desapairEnemy4(QGraphicsPixmapItem *item);
+
+    bool tryToFixTheBug=false;
+    bool keyUnlocked=false;
+
+    QGraphicsView *view;
+    QGraphicsScene *scene;
+    QPushButton *b_LevelI = new QPushButton("Level I");
+    QGraphicsProxyWidget *L1;
+    blockList list;
+    pathFindingList listMatL1;
+
+    QGraphicsPixmapItem *enemy1;
+    QGraphicsPixmapItem *enemy2;
+    QGraphicsPixmapItem *enemy3;
+    QGraphicsPixmapItem *enemy4;
 
 
 protected:

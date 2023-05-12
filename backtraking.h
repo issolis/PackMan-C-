@@ -26,7 +26,7 @@ public:
 
 
 
-    nodeBack *a;
+     nodeBack *a;
     listBack auxFindShortestPath(int start_x, int start_y, int end_x, int end_y);
     listBack findShortestPath(int beggining, int final);
 

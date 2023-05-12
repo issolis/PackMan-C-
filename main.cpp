@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 {
    QApplication a(argc, argv);
    serverManager *manager= new serverManager();
-   manager->waitConnection();
+   //manager->waitConnection();
    //manager->waitConnection1();
    widget w;
    w.Server=manager->server;

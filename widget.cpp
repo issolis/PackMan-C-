@@ -35,6 +35,7 @@ widget::widget(QWidget *parent)
     points.insert(277);
     power=new blockList();
     power->insert(70);
+    IDList2= listBack ();
 
 
     QObject::connect(b_LevelI, &QPushButton::clicked, [&]{
@@ -92,18 +93,19 @@ void widget::bL1_Clicked(){
     scene->addItem(enemy3);
     scene->addItem(pacman);
 
-    enemy3->setPos(-1000,-1000);
-    enemy4->setPos(-1000,-1000);
+    enemy3->setPos(000,000);
+    enemy4->setPos(0,0);
     pacman->setPos(-120,0);
-    colocatePoints();
-    // MoveFirstEnemy();
+    //colocatePoints();
+    MoveFirstEnemy();
     //MoveSecondEnemy();
+    MoveThirdEnemy();
     movePlayer();
-    checkPoints();
-    checkCollision();
-    label();
-    server();
-    catched();
+    //checkPoints();
+    //checkCollision();
+    //label();
+    //server();
+    //catched();
 
 }
 
@@ -183,28 +185,41 @@ void widget::defineRouteThirdEnemy(){
     const int N = 22;
     const int m = 15;
     int grid[m][N]={
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0,1, 0, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,0, 1, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0,1, 0, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,0, 1, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
 
-                      };
+    };
     backTraking bt(grid);
 
 
+    int conversionPos=((220+enemy3->pos().x())/20+(140+enemy3->pos().y())/20*22)+1;
+    int x = 0;
+    if(!powerTaken){
+        x=((220+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
+    }else{
+        x=((220+  power->findNode(IDPower.toInt()-1)->item1->pos().x())/20+(140+  power->findNode(IDPower.toInt()-1)->item1->pos().y())/20*22)+1;
+    }
+    if(enemiesScaping==true)
+        x=randNumber();
 
-    bt.auxFindShortestPath(1,1,8,8);
+    IDList2=bt.findShortestPath(conversionPos,x);
+    IDList2.printId();
+
+
+    came2=false;
 
 }
 
@@ -265,6 +280,37 @@ void widget::MoveSecondEnemy(){
         }
     } );
     timer->start(200);
+}
+
+void widget::MoveThirdEnemy(){
+    int x; int y;
+    QTimer *timer = new QTimer();
+
+    QObject::connect(timer, &QTimer::timeout, [&]() {
+        if(came2){
+            defineRouteThirdEnemy();
+        }
+        else{
+            if(!enemy3Catched){
+                if(IDList2.numberElements!=0){
+                    x=adapPosX(IDList2.head->id);
+                    y=adapPosY(IDList2.head->id);
+
+                    IDList2.deleteFirst();
+                    if(IDList2.numberElements==0){
+                        came2=true;
+                    }
+
+                    enemy3->setPos(x, y);
+                }
+                else{
+                    came2=true;
+                }
+            }
+        }
+    });
+    timer->start(80);
+
 }
 
 int widget::randNumber(){

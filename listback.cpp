@@ -30,6 +30,7 @@ void listBack::addId(int id){
         }
         temp->next = newNode;
     }
+    numberElements++;
 }
 void listBack::deleteNode(){
     if (head == nullptr) {
@@ -136,4 +137,12 @@ void listBack::addL(listBack path){
     }
 
 }
-
+void listBack::deleteFirst(){
+    if(head!=nullptr){
+        if(head->next!=nullptr)
+            head=head->next;
+        else
+            head=nullptr;
+    }
+    numberElements--;
+}

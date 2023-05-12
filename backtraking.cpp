@@ -10,18 +10,16 @@ using namespace std;
 
 
 backTraking::backTraking(int arr[m][N]) {
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < m; j++) {
-            grid[i][j] = arr[i][j];
-        }
-    }
+
     shortestPathLength=9999;
+    memcpy(grid, arr, sizeof(grid));
+
 
 }
 void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, listBack path) {
     int value = grid[x][y];
     int row = N;
-    int colum = N;
+    int colum = m;
 
     int manhattanDist = abs(end_x - x) + abs(end_y - y);
     bool canMoveRight = (end_x > x && manhattanDist > abs(end_y - y));
@@ -167,16 +165,7 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
         }
 
         return ;
-
-
     }
-
-
-
-
-
-
-
 
 }
 listBack backTraking::auxFindShortestPath(int start_x, int start_y, int end_x, int end_y) {
@@ -201,8 +190,3 @@ listBack backTraking::findShortestPath(int beggining, int final ){
 
     return auxFindShortestPath(xB,yB,xF,yF);
 }
-
-
-
-
-

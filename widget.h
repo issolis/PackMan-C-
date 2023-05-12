@@ -31,6 +31,7 @@ public:
     int adapPosY(int id);
     void MoveFirstEnemy();
     void MoveSecondEnemy();
+    void MoveThirdEnemy();
     void defineRouteFirstEnemy();
     void defineRouteSecondEnemy();
     void defineRouteThirdEnemy();
@@ -68,6 +69,7 @@ public:
     QVariant counter=0;
     bool came=true;
     bool came1=true;
+    bool came2=true;
     bool controler=true;
     listID IDList;
     listID IDList1;

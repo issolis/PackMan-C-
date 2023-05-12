@@ -10,6 +10,7 @@ public:
     listBack();
     void add(int x, int y);
     void deleteNode();
+    void deleteFirst();
     bool esvacia();
     void printPath(listBack path);
     int length();
@@ -18,6 +19,7 @@ public:
     void addId(int id);
     void printId();
     void addL(listBack path);
+    int numberElements=0;
 
 
 

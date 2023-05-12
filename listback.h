@@ -6,7 +6,7 @@
 class listBack
 {
 public:
-    nodeBack* head;
+    nodeBack* head=nullptr;
     listBack();
     void add(int x, int y);
     void deleteNode();

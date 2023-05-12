@@ -25,6 +25,7 @@ void listID::insert(int id){
 void listID::show(){
     nodeID *aux=head;
     QString string="";
+
     while(aux!=nullptr){
         string= string+" "+QString::number(aux->id);
         aux=aux->next;

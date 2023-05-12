@@ -184,6 +184,7 @@ void widget:: defineRouteSecondEnemy(){
 void widget::defineRouteThirdEnemy(){
     const int N = 22;
     const int m = 15;
+
     int grid[m][N]={
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
         {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},

@@ -113,7 +113,7 @@ bool listBack  ::hasDuplicates() {
 }
 void listBack::printId(){
     if (head == nullptr) {
-        std::cout << "Empty path\n";
+        qDebug()<< "Empty path\n";
         return;
     }
     nodeBack* curr = head;

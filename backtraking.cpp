@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-backTraking::backTraking(int arr[N][m]) {
+backTraking::backTraking(int arr[m][N]) {
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < m; j++) {
             grid[i][j] = arr[i][j];
@@ -33,7 +33,7 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
 
     if (canMoveRight && grid[x+1][y] != -1) {
 
-        if (grid[x+1][y] > 0 ){
+        if (grid[x+1][y] >0 ){
 
             int newValue = grid[x+1][y];
 
@@ -64,7 +64,7 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
     if (canMoveLeft  && grid[x-1][y] != -1) {
 
 
-        if (grid[x-1][y] > 0){
+        if (grid[x-1][y] >0){
 
             int newValue = grid[x-1][y];
             grid[x-1][y] = -1;
@@ -92,7 +92,7 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
     }
     if (canMoveDown && grid[x][y+1] != -1) {
 
-        if(grid[x][y+1] > 0){
+        if(grid[x][y+1] >0){
             int newValue = grid[x][y+1];
             grid[x][y+1] = -1;
             path.add(x, y+1);
@@ -118,7 +118,7 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
     }
     if (canMoveUp && grid[x][y-1] != -1) {
 
-        if (grid[x][y-1] > 0 ){
+        if (grid[x][y-1] >0 ){
 
             int newValue = grid[x][y-1];
             grid[x][y-1] = -1;
@@ -201,6 +201,7 @@ listBack backTraking::findShortestPath(int beggining, int final ){
 
     return auxFindShortestPath(xB,yB,xF,yF);
 }
+
 
 
 

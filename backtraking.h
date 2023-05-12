@@ -14,7 +14,7 @@ const int m = 15;
 class backTraking
 {
 public:
-    backTraking(int arr[N][m]);
+    backTraking(int arr[m][N]);
     void backtrack(int x, int y, int distance, int end_x, int end_y,listBack path);
 
 
@@ -37,7 +37,7 @@ public:
 
 private:
 
-    int grid[N][m];
+    int grid[m][N];
 
 
 

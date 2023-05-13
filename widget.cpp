@@ -12,6 +12,7 @@ bool enemy1Catched=false;
 bool enemy2Catched=false;
 bool enemy3Catched=false;
 bool enemy4Catched=false;
+bool levelPased=true;
 widget::widget(QWidget *parent)
     : QWidget(parent)
 {
@@ -115,9 +116,11 @@ void widget:: defineRouteFirstEnemy(){
     list->makeItTrue();
 
     int i=0;
-    while(i!=blocks){
-        list->findNode (((220+posXL1[i])/20+(140+posYL1[i])/20*22)+1)->closed=true;
-        i++;
+    if(level==1){
+        while(i!=blocks){
+            list->findNode (((220+posXL1[i])/20+(140+posYL1[i])/20*22)+1)->closed=true;
+            i++;
+        }
     }
     list->show();
     int conversionPos=((220+enemy1->pos().x())/20+(140+enemy1->pos().y())/20*22)+1;
@@ -426,11 +429,14 @@ void widget:: checkPoints(){
         while(i!=330-blocks){
             if(points.findNode(i)->item1->pos()==pacman->pos()){
                 points.findNode(i)->item1->setPixmap(QPixmap (":bg.png"));
-                if(pointsVisited.findNode(i)->id!=i)
+                if(pointsVisited.findNode(i)->id!=i){
                     totalPoints=totalPoints.toInt()+10;
-                pointsVisited.insert(i);
+                    pointsVisited.insert(i);
 
-
+                    if(pointsVisited.numberElements==blocks){
+                        levelPased=true;
+                    }
+                }
                 if((totalPoints.toInt()-auxTotalPoints.toInt())>=200  && auxTotalPoints!=totalPoints && !powerTaken && !enemiesScaping){
                     power->findNode(IDPower.toInt())->item1->setPixmap(QPixmap (":fruit.png"));
                     int x=randNumber();

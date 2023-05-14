@@ -12,6 +12,7 @@ bool enemy1Catched=false;
 bool enemy2Catched=false;
 bool enemy3Catched=false;
 bool enemy4Catched=false;
+bool ended1=true;
 bool levelPased=true;
 widget::widget(QWidget *parent)
     : QWidget(parent)
@@ -95,18 +96,18 @@ void widget::bL1_Clicked(){
     scene->addItem(pacman);
 
     enemy3->setPos(000,000);
-    enemy4->setPos(0,0);
+    //enemy4->setPos(0,0);
     pacman->setPos(-120,0);
     //colocatePoints();
-    MoveFirstEnemy();
+    //MoveFirstEnemy();
     //MoveSecondEnemy();
     MoveThirdEnemy();
     movePlayer();
-    //checkPoints();
-    //checkCollision();
-    //label();
+    checkPoints();
+    checkCollision();
+    label();
     //server();
-    //catched();
+    catched();
 
 }
 
@@ -188,27 +189,27 @@ void widget::defineRouteThirdEnemy(){
     const int N = 22;
     const int m = 15;
 
+
     int grid[m][N]={
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0,1, 0, 0, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,0, 1, 0, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0,1, 0, 0, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,0, 1, 0, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,1, 1, 0, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1,1, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,0, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
+           {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1},
 
-    };
+       };
+
     backTraking bt(grid);
-
-
     int conversionPos=((220+enemy3->pos().x())/20+(140+enemy3->pos().y())/20*22)+1;
     int x = 0;
     if(!powerTaken){
@@ -218,12 +219,10 @@ void widget::defineRouteThirdEnemy(){
     }
     if(enemiesScaping==true)
         x=randNumber();
-
     IDList2=bt.findShortestPath(conversionPos,x);
     IDList2.printId();
-
-
     came2=false;
+    ended1=true;
 
 }
 
@@ -291,7 +290,8 @@ void widget::MoveThirdEnemy(){
     QTimer *timer = new QTimer();
 
     QObject::connect(timer, &QTimer::timeout, [&]() {
-        if(came2){
+        if(came2 && ended1==true){
+            ended1=false;
             defineRouteThirdEnemy();
         }
         else{

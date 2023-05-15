@@ -32,21 +32,32 @@ public:
     void MoveFirstEnemy();
     void MoveSecondEnemy();
     void MoveThirdEnemy();
+    void MoveFourthEnemy();
     void defineRouteFirstEnemy();
     void defineRouteSecondEnemy();
     void defineRouteThirdEnemy();
+    void defineRouteFourthEnemy();
     void movePlayer();
     void colocatePoints();
-    QVariant direcction=1;
-    bool noPutIt(int level, int ID);
-    blockList points;
-    listID poinstGotten;
-    void checkPoints();
-    void server();
-    int determinateDirecction(QString comas);
     void checkCollision();
     void label();
     void catched();
+    void defineBlokedPositions();
+    void checkPoints();
+    void server();
+    void desapairEnemy1(QGraphicsPixmapItem *item);
+    void desapairEnemy2(QGraphicsPixmapItem *item);
+    void desapairEnemy3(QGraphicsPixmapItem *item);
+    void desapairEnemy4(QGraphicsPixmapItem *item);
+    void putBlocks(int amount);
+
+    QVariant direcction=1;
+    bool noPutIt(int level, int ID);
+
+
+    int determinateDirecction(QString comas);
+    blockList points;
+    listID poinstGotten;
     int randNumber();
     int randNumber(int range);
     listID pointsVisited;
@@ -54,7 +65,7 @@ public:
 
     int posxE1=0;
     int posYE1=0;
-    int blocks=53;
+    QVariant blocks=53;
     bool inPower=false;
     bool powerTaken=false;
 
@@ -70,15 +81,15 @@ public:
     bool came=true;
     bool came1=true;
     bool came2=true;
+    bool came3=true;
     bool controler=true;
     listID IDList;
     listID IDList1;
     listBack IDList2;
+    listBack IDList3;
 
-    void desapairEnemy1(QGraphicsPixmapItem *item);
-    void desapairEnemy2(QGraphicsPixmapItem *item);
-    void desapairEnemy3(QGraphicsPixmapItem *item);
-    void desapairEnemy4(QGraphicsPixmapItem *item);
+
+
 
     bool tryToFixTheBug=false;
     bool keyUnlocked=false;
@@ -94,7 +105,6 @@ public:
     QGraphicsPixmapItem *enemy2;
     QGraphicsPixmapItem *enemy3;
     QGraphicsPixmapItem *enemy4;
-
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

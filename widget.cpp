@@ -50,16 +50,16 @@ widget::widget(QWidget *parent)
 }
 void widget::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_W) {
+    if (event->key() == Qt::Key_W && !keyUnlocked) {
         direcction=3;
     }
-    if (event->key() == Qt::Key_S) {
+    if (event->key() == Qt::Key_S && !keyUnlocked) {
         direcction=4;
     }
-    if (event->key() == Qt::Key_D) {
+    if (event->key() == Qt::Key_D && !keyUnlocked) {
         direcction=1;
     }
-    if (event->key() == Qt::Key_A) {
+    if (event->key() == Qt::Key_A && !keyUnlocked) {
         direcction=2;
     }
     if (event->key() == Qt::Key_Alt) {
@@ -100,12 +100,13 @@ void widget::bL1_Clicked(){
     pacman->setPos(-120,0);
     colocatePoints();
     enemy1->setPos(-200, -120);
-    MoveFirstEnemy();
+    //MoveFirstEnemy();
     movePlayer();
     checkPoints();
+    sendPoints();
     checkCollision();
     label();
-    //server();
+    server();
     catched();
 }
 void widget:: defineRouteFirstEnemy(){
@@ -555,7 +556,7 @@ void widget:: checkPoints(){
                 if(pointsVisited.findNode(i)->id!=i){
                     totalPoints=totalPoints.toInt()+10;
                     pointsVisited.insert(i);
-                    if(pointsVisited.numberElements==5 && !levelPased){
+                    if(pointsVisited.numberElements==1000 && !levelPased){
 
                         levelPased=true;
                         if(level==1){
@@ -705,23 +706,23 @@ void widget:: server(){
         QString s=Server->socket->readAll();
         if(keyUnlocked){
             if(!s.isEmpty() ){
-                int conversionPos;
-                if(s=="\u0001"){
+                qDebug()<<s;
+                if(s=="\u0001" || s=="\u0001\u0001" || s=="\u0001\u0001\u0001" || s=="\u0001\u0001\u0001\u0001" || s=="\u0001\u0001\u0001\u0001\u0001"){
                     direcction=1;
                 }
-                else if(s=="\u0002"){
+                else if(s=="\u0002" || s=="\u0002\u0002" || s=="\u0002\u0002\u0002" || s=="\u0002\u0002\u0002\u0002" || s=="\u0002\u0002\u0002\u0002\u0002"){
                     direcction=2;
                 }
-                else if(s=="\u0003"){
+                else if(s=="\u0003" || s=="\u0003\u0003" || s=="\u0003\u0003\u0003" || s=="\u0003\u0003\u0003\u0003" || s=="\u0003\u0003\u0003\u0003\u0003"){
                     direcction=3;
                 }
-                else if(s=="\u0004"){
+                else if(s=="\u0004" || s=="\u0004\u0004" || s=="\u0004\u0004\u0004" || s=="\u0004\u0004\u0004\u0004" || s=="\u0004\u0004\u0004\u0004\u0004"){
                     direcction=4;
                 }
             }
         }
     });
-    timer->start(200);
+    timer->start();
 }
 void widget:: checkCollision(){
     QTimer *timer = new QTimer();
@@ -835,4 +836,34 @@ void widget:: desapairEnemy4(QGraphicsPixmapItem *item){
          item->setVisible(true);
         enemy4Catched=false;
     });
+}
+void widget::sendPoints()
+{
+    QTimer* timer;
+    timer = new QTimer(this);
+
+    // Conectar el temporizador al método sendLifes()
+    connect(timer, &QTimer::timeout, this, &widget::sendLifes);
+
+    // Establecer el intervalo de tiempo en milisegundos (por ejemplo, 1000 ms = 1 segundo)
+
+    timer->start(50);
+}
+
+void widget::sendLifes()
+{
+
+
+
+
+    QString st="lifes: "+lifes.toString()+" Puntos: "+totalPoints.toString();
+
+
+    if (Server1->socket->isOpen()) {
+        Server1->socket->write(st.toUtf8());
+        Server1->socket->flush();
+
+    } else {
+        qDebug() << "Error: El socket no está abierto";
+    }
 }

@@ -105,7 +105,9 @@ public:
     QGraphicsPixmapItem *enemy2;
     QGraphicsPixmapItem *enemy3;
     QGraphicsPixmapItem *enemy4;
-
+    LocalServer *Server1=new LocalServer();
+    void sendLifes();
+    void sendPoints();
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 

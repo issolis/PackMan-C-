@@ -854,24 +854,19 @@ void widget::sendPoints()
     connect(timer, &QTimer::timeout, this, &widget::sendLifes);
 
     // Establecer el intervalo de tiempo en milisegundos (por ejemplo, 1000 ms = 1 segundo)
-
+    s:
     timer->start(50);
 }
 
-void widget::sendLifes()
-{
-
-
-
-
-    QString st="lifes: "+lifes.toString()+" Puntos: "+totalPoints.toString();
-
+    void widget::sendLifes()
+    {
+    QString st = "lifes:"  + lifes.toString() + ";points:" + totalPoints.toString();
 
     if (Server1->socket->isOpen()) {
         Server1->socket->write(st.toUtf8());
         Server1->socket->flush();
-
     } else {
         qDebug() << "Error: El socket no está abierto";
     }
-}
+    }
+

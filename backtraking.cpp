@@ -157,6 +157,7 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
 
 
             }
+            path.printPath(path);
 
 
 

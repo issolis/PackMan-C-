@@ -100,7 +100,7 @@ void widget::bL1_Clicked(){
     pacman->setPos(-120,0);
     colocatePoints();
     enemy1->setPos(-200, -120);
-    //MoveFirstEnemy();
+    MoveFirstEnemy();
     movePlayer();
     checkPoints();
     sendPoints();
@@ -117,24 +117,28 @@ void widget:: defineRouteFirstEnemy(){
     if(level==1){
         while(i!=blocks){
             list->findNode (((220+posXL1[i])/20+(140+posYL1[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL1[i])/20+(140+posYL1[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
     else if(level==2){
         while(i!=blocks){
             list->findNode (((220+posXL2[i])/20+(140+posYL2[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL2[i])/20+(140+posYL2[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
     else if(level==3){
         while(i!=blocks){
             list->findNode (((220+posXL3[i])/20+(140+posYL3[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL3[i])/20+(140+posYL3[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
     else if(level==4){
         while(i!=blocks){
             list->findNode (((220+posXL4[i])/20+(140+posYL4[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL4[i])/20+(140+posYL4[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
@@ -169,24 +173,28 @@ void widget:: defineRouteSecondEnemy(){
     if(level==1){
         while(i!=blocks){
             list->findNode (((220+posXL1[i])/20+(140+posYL1[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL1[i])/20+(140+posYL1[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
     else if(level==2){
         while(i!=blocks){
             list->findNode (((220+posXL2[i])/20+(140+posYL2[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL2[i])/20+(140+posYL2[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
     else if(level==3){
         while(i!=blocks){
             list->findNode (((220+posXL3[i])/20+(140+posYL3[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL3[i])/20+(140+posYL3[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
     else if(level==4){
         while(i!=blocks){
             list->findNode (((220+posXL4[i])/20+(140+posYL4[i])/20*22)+1)->closed=true;
+            list->findNode (((220+posXL4[i])/20+(140+posYL4[i])/20*22)+1)->impresable=true;
             i++;
         }
     }
@@ -217,53 +225,53 @@ void widget::defineRouteThirdEnemy(){
     const int m = 15;
 
     int level2[14][22]={
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1},
-        };
-        int level3[14][22]={
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1},
-            {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-            {1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1},
-            {1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
-            {1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1},
-            {1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        };
-        int level4[14][22]={
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
-            {1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-            {1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1},
-        };
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1},
+    };
+    int level3[14][22]={
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1},
+        {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+        {1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1},
+        {1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
+        {1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1},
+        {1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    };
+    int level4[14][22]={
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+        {1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
+        {1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+        {1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+        {1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1},
+    };
     backTraking bt (level2);
     backTraking bt1 (level3);
     backTraking bt2 (level4);
@@ -279,7 +287,7 @@ void widget::defineRouteThirdEnemy(){
     if(enemiesScaping==true)
         x=randNumber();
     if(level==2)
-         IDList2=bt.findShortestPath(conversionPos,x);
+        IDList2=bt.findShortestPath(conversionPos,x);
     else if(level==3)
         IDList2=bt1.findShortestPath(conversionPos,x);
     else if(level==4)
@@ -412,27 +420,27 @@ void widget::MoveFourthEnemy(){
     int x; int y;
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
-    if(!levelPased){
-        if(came3){
-            defineRouteFourthEnemy();
-        }
-        else{
-            if(!enemy4Catched){
-                if(IDList3.numberElements!=0){
-                    x=adapPosX(IDList3.head->id);
-                    y=adapPosY(IDList3.head->id);
-                    IDList3.deleteFirst();
-                    if(IDList3.numberElements==0){
+        if(!levelPased){
+            if(came3){
+                defineRouteFourthEnemy();
+            }
+            else{
+                if(!enemy4Catched){
+                    if(IDList3.numberElements!=0){
+                        x=adapPosX(IDList3.head->id);
+                        y=adapPosY(IDList3.head->id);
+                        IDList3.deleteFirst();
+                        if(IDList3.numberElements==0){
+                            came3=true;
+                        }
+                        enemy3->setPos(x, y);
+                    }
+                    else{
                         came3=true;
                     }
-                    enemy3->setPos(x, y);
-                }
-                else{
-                    came3=true;
                 }
             }
         }
-    }
     });
     timer->start(210);
 
@@ -462,7 +470,7 @@ int widget::adapPosY(int id){
 void widget::movePlayer(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
-        int conversionPos; qDebug()<<level;
+        int conversionPos;
         if(direcction==1){
             conversionPos=((240+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
             if (!noPutIt(level.toInt(), conversionPos))
@@ -550,7 +558,7 @@ void widget:: checkPoints(){
         int i=0;
         while(i!=309-blocks.toInt()){
             if(points.findNode(i)->item1->pos()==pacman->pos()){
-                //qDebug()<<"s[i";
+
                 points.findNode(i)->item1->setPixmap(QPixmap (":bg.png"));
                 points.findNode(i)->item1->setZValue(-90);
                 if(pointsVisited.findNode(i)->id!=i){
@@ -706,7 +714,7 @@ void widget:: server(){
         QString s=Server->socket->readAll();
         if(keyUnlocked){
             if(!s.isEmpty() ){
-                qDebug()<<s;
+
                 if(s=="\u0001" || s=="\u0001\u0001" || s=="\u0001\u0001\u0001" || s=="\u0001\u0001\u0001\u0001" || s=="\u0001\u0001\u0001\u0001\u0001"){
                     direcction=1;
                 }
@@ -752,17 +760,17 @@ void widget:: checkCollision(){
                     desapairEnemy1(enemy1);
                 }
                 else if(pacman->pos()==enemy2->pos()){
-                     if(!enemy2Catched) totalPoints=totalPoints.toInt()+50;
+                    if(!enemy2Catched) totalPoints=totalPoints.toInt()+50;
                     enemy1Catched=true;
                     desapairEnemy2(enemy2);
                 }
                 else if(pacman->pos()==enemy3->pos()){
-                     if(!enemy3Catched) totalPoints=totalPoints.toInt()+50;
+                    if(!enemy3Catched) totalPoints=totalPoints.toInt()+50;
                     enemy1Catched=true;
                     desapairEnemy3(enemy3);
                 }
                 else if(pacman->pos()==enemy4->pos()){
-                     if(!enemy4Catched) totalPoints=totalPoints.toInt()+50;
+                    if(!enemy4Catched) totalPoints=totalPoints.toInt()+50;
                     enemy1Catched=true;
                     desapairEnemy4(enemy4);
                 }
@@ -819,21 +827,21 @@ void widget:: desapairEnemy1(QGraphicsPixmapItem *item){
 void widget:: desapairEnemy2(QGraphicsPixmapItem *item){
     item->hide();
     QTimer::singleShot(5000, [=]() {
-         item->setVisible(true);
+        item->setVisible(true);
         enemy2Catched=false;
     });
 }
 void widget:: desapairEnemy3(QGraphicsPixmapItem *item){
-   item->hide();
+    item->hide();
     QTimer::singleShot(5000, [=]() {
-         item->setVisible(true);
+        item->setVisible(true);
         enemy3Catched=false;
     });
 }
 void widget:: desapairEnemy4(QGraphicsPixmapItem *item){
     item->hide();
     QTimer::singleShot(5000, [=]() {
-         item->setVisible(true);
+        item->setVisible(true);
         enemy4Catched=false;
     });
 }

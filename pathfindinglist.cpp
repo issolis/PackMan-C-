@@ -80,17 +80,26 @@ void pathFindingList::show(){
     pathFindingNode *aux1=head;
     QTextStream cout(stdout);
     int i=0;
+    QString closeList="";
+    QString openList="";
     while(i!=rows){
         while(aux!=nullptr){
 
-            std::cout<<aux->closed<<" ";
+            if(aux->closed && aux->impresable){
+                closeList=QString::number(aux->id)+" "+closeList;
+            }
+            if(aux->opened){
+                openList=QString::number(aux->id)+" "+openList;
+            }
             aux=aux->right;
         }
-        std::cout<<std::endl;
+
         aux=aux1->down;
         aux1=aux1->down;
         i++;
     }
+    qDebug()<<"openList: "<<openList;
+    qDebug()<<"closeList: "<<closeList;
 }
 
 void pathFindingList:: defineH(int xF, int yF){
@@ -116,8 +125,6 @@ void pathFindingList:: findRoute(int beggining, int final){
 
     pathFindingNode *aux=head;
     pathFindingNode *aux1=head;
-
-
 
     int i=0;
     while(i!=rows){
@@ -149,12 +156,13 @@ void pathFindingList:: findRoute(int beggining, int final){
 
     defineH(xF, yF);
 
-    linkedList openList;
+    linkedList openList; int iteration=1;
 
     openList.idFinal=final;
     start->closed=true;
     start->opened=true;
-
+    qDebug()<<"Iteracion "<<iteration;
+    show();
     pathFindingNode *auxiliar=start;
     while(!openList.routeFinded){
         if(auxiliar->right!=nullptr && !auxiliar->right->closed) {
@@ -238,6 +246,11 @@ void pathFindingList:: findRoute(int beggining, int final){
         auxiliar=openList.min;
         auxiliar->closed=true;
         openList.deleteNode(auxiliar);
+        iteration++;
+        qDebug()<<"Iteracion "<<iteration;
+        qDebug()<<" ";
+        show();
+        qDebug()<<" ";
     }
     if(openList.head!=nullptr){
         pathFindingNode *auxP=end;

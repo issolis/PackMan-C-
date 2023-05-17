@@ -22,6 +22,7 @@ public:
 
     bool closed=false;
     bool opened=false;
+    bool impresable=false;
 };
 
 #endif // PATHFINDINGNODE_H

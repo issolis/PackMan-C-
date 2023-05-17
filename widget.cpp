@@ -40,7 +40,7 @@ widget::widget(QWidget *parent)
     enemy3->setPos(-1000,-1000);enemy4->setPos(-1000,-1000);
     QPixmap myPixma (":pac.png");
     pacman= new QGraphicsPixmapItem(myPixma);
-    points.insert(300);
+    points.insert(315);
     power=new blockList();
     power->insert(70);
     IDList2= listBack (); IDList3= listBack ();
@@ -368,6 +368,39 @@ void widget::defineRouteFourthEnemy(){
     const int N = 22;
     const int m = 15;
 
+
+    int level2[14][22]={
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1},
+    };
+    int level3[14][22]={
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1},
+        {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+        {1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1},
+        {1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
+        {1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1},
+        {1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    };
     int level4[14][22]={
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
@@ -384,9 +417,12 @@ void widget::defineRouteFourthEnemy(){
         {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1},
     };
-    backTraking *bt;
+    backTraking bt (level2);
+    backTraking bt1 (level3);
+    backTraking bt2 (level4);
 
-    int conversionPos=((220+enemy3->pos().x())/20+(140+enemy3->pos().y())/20*22)+1;
+
+    int conversionPos=((220+enemy4->pos().x())/20+(140+enemy4->pos().y())/20*22)+1;
     int x = 0;
     if(!powerTaken){
         x=((220+pacman->pos().x())/20+(140+pacman->pos().y())/20*22)+1;
@@ -395,7 +431,13 @@ void widget::defineRouteFourthEnemy(){
     }
     if(enemiesScaping==true)
         x=randNumber();
-    IDList3=bt->findShortestPath(conversionPos,x);
+
+    if(level==2)
+        IDList3=bt.findShortestPath(conversionPos,x);
+    else if(level==3)
+        IDList3=bt1.findShortestPath(conversionPos,x);
+    else if(level==4)
+        IDList3=bt2.findShortestPath(conversionPos,x);
     IDList3.printId();
     came3=false;
     ended1=true;
@@ -720,22 +762,24 @@ void widget:: checkPoints(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
         int i=0;
-        while(i!=309-blocks.toInt()){
-            if(points.findNode(i)->item1->pos()==pacman->pos()){
+        while(i!=309){
+            if( !levelPased && points.findNode(i)->item1->pos()==pacman->pos()){
 
                 points.findNode(i)->item1->setPixmap(QPixmap (":bg.png"));
                 points.findNode(i)->item1->setZValue(-90);
                 if(pointsVisited.findNode(i)->id!=i){
                     totalPoints=totalPoints.toInt()+10;
                     pointsVisited.insert(i);
-                    if(pointsVisited.numberElements==1000 && !levelPased){
+                    if(pointsVisited.numberElements==100 && !levelPased){
 
                         levelPased=true;
                         if(level==1){
                             level=level.toInt()+1;
-                            pacman->setPos(200,120);
+                            pacman->setPos(200,-120);
                             listID list2;
                             pointsVisited=list2;
+                            pointsVisited.numberElements=0;
+                            points.insert(315);
                             IDList.head=nullptr;
                             came=true;
                             int i=0;
@@ -758,10 +802,10 @@ void widget:: checkPoints(){
                             putBlocks(82);
                             colocatePoints();
                             QPixmap myPixmap(":g1.png");
-                            enemy1->setPos(-220, -140);
+                            enemy1->setPos(200, 120);
                             enemy3->setPos(200, 120);
                             scene->addItem(enemy3);
-                            //MoveThirdEnemy();
+                            MoveThirdEnemy();
                             levelPased=false;
                         }
                         else if(level==2){
@@ -798,7 +842,7 @@ void widget:: checkPoints(){
                             enemy2->setPos(-220, -140);
                             enemy3->setPos(-220, -140);
                             scene->addItem(enemy2);
-                            //MoveThirdEnemy();
+                            MoveSecondEnemy();
                             levelPased=false;
                         }
                         else if(level==3){
@@ -838,7 +882,7 @@ void widget:: checkPoints(){
                             enemy3->setPos(-220, -140);
                             enemy4->setPos(-220, -140);
                             scene->addItem(enemy4);
-                            MoveSecondEnemy();
+                            MoveFourthEnemy();
                             levelPased=false;
                         }
                         else if(level==4){

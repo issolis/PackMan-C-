@@ -5,7 +5,15 @@ linkedList::linkedList()
 {
 
 }
-
+/**
+ * @brief Inserta un nodo en la lista enlazada.
+ *
+ * Inserta un nuevo nodo con el ID especificado al final de la lista.
+ * Si el ID del nodo es igual al ID final, se marca la ruta como encontrada.
+ *
+ * @param id Puntero al nodo a insertar.
+ * @return none.
+ */
 void linkedList:: insert(pathFindingNode* id){
     node *newNode= new node(id);
     node *aux = head;
@@ -23,6 +31,14 @@ void linkedList:: insert(pathFindingNode* id){
         aux->next=newNode;
     findMin();
 }
+/**
+ * @brief Elimina un nodo de la lista enlazada.
+ *
+ * Elimina el nodo especificado de la lista enlazada, ajustando los punteros adecuadamente.
+ *
+ * @param Node Puntero al nodo a eliminar.
+ * @return none.
+ */
 void linkedList::deleteNode(pathFindingNode *Node){
 
     node *aux = head;
@@ -50,6 +66,15 @@ void linkedList::deleteNode(pathFindingNode *Node){
         }
     }
 }
+/**
+ * @brief Encuentra el nodo con el valor mínimo en la lista enlazada.
+ *
+ * Encuentra el nodo con el valor mínimo de la función f en la lista enlazada.
+ * El resultado se guarda en el atributo `min` de la clase `linkedList`.
+ *
+ * @param none.
+ * @return none.
+ */
 void linkedList:: findMin(){
 
         pathFindingNode *min=head->id;

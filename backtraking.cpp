@@ -16,6 +16,24 @@ backTraking::backTraking(int arr[m][N]) {
 
 
 }
+/**
+ * @brief Realiza el algoritmo de retroceso para encontrar el camino más corto.
+ *
+ * Realiza el algoritmo de retroceso (backtracking) para encontrar el camino más corto desde las coordenadas (x, y)
+ * hasta las coordenadas (end_x, end_y) en la cuadrícula.
+ * Se considera el valor de cada celda en la cuadrícula para determinar si se puede avanzar hacia una dirección específica.
+ * Se actualiza la lista `path` con las coordenadas visitadas durante el proceso de retroceso.
+ * Si se alcanzan las coordenadas de destino, se compara la distancia del camino actual con la distancia del camino más corto
+ * encontrado hasta el momento y se actualiza si es más corto.
+ *
+ * @param x Coordenada x actual.
+ * @param y Coordenada y actual.
+ * @param distance Distancia recorrida hasta el momento.
+ * @param end_x Coordenada x de destino.
+ * @param end_y Coordenada y de destino.
+ * @param path Lista de coordenadas visitadas durante el retroceso.
+ * @return none.
+ */
 void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, listBack path) {
     int value = grid[x][y];
     int row = N;
@@ -169,6 +187,19 @@ void backTraking::backtrack(int x, int y, int distance, int end_x, int end_y, li
     }
 
 }
+/**
+ * @brief Método auxiliar para encontrar el camino más corto desde un punto de inicio hasta un punto final.
+ *
+ * Crea una lista `path` y agrega el punto de inicio a la lista.
+ * Luego, llama al método `backtrack()` para encontrar el camino más corto desde el punto de inicio hasta el punto final.
+ * Agrega el contenido de la lista `shortestPath` a la lista `id_list` y la imprime.
+ *
+ * @param start_x Coordenada x del punto de inicio.
+ * @param start_y Coordenada y del punto de inicio.
+ * @param end_x Coordenada x del punto final.
+ * @param end_y Coordenada y del punto final.
+ * @return La lista `id_list` que contiene los identificadores del camino más corto.
+ */
 listBack backTraking::auxFindShortestPath(int start_x, int start_y, int end_x, int end_y) {
     listBack path;
     path.add(start_x, start_y);
@@ -183,6 +214,16 @@ listBack backTraking::auxFindShortestPath(int start_x, int start_y, int end_x, i
 
 
 }
+/**
+ * @brief Encuentra el camino más corto desde un punto de inicio hasta un punto final.
+ *
+ * Calcula el punto de inicio y el punto final en coordenadas de la cuadrícula y luego llama al método auxiliar
+ * `auxFindShortestPath()` para encontrar el camino más corto.
+ *
+ * @param beggining Punto de inicio.
+ * @param final Punto final.
+ * @return El camino más corto como una lista de coordenadas.
+ */
 listBack backTraking::findShortestPath(int beggining, int final ){
     int xB=(beggining-1)/22;
     int yB=(beggining-1)%22;

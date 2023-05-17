@@ -9,6 +9,16 @@ pathFindingList::pathFindingList()
 {
     head=nullptr;
 }
+/**
+ * @brief Función para construir una matriz en forma de lista enlazada.
+ *
+ * Esta función construye una matriz en forma de lista enlazada utilizando nodos de la clase `pathFindingNode`.
+ * La matriz tendrá el número de filas y columnas especificadas por los parámetros `rows` y `colums`.
+ *
+ * @param rows El número de filas de la matriz.
+ * @param colums El número de columnas de la matriz.
+ * @return Una nueva instancia de `pathFindingList` que contiene la matriz construida.
+ */
 pathFindingList pathFindingList::buildMatrix(int rows, int colums){
     pathFindingNode *newNode=  new pathFindingNode();
     head=newNode;
@@ -61,6 +71,16 @@ pathFindingList pathFindingList::buildMatrix(int rows, int colums){
     return list;
 
 }
+/**
+ * @brief Define las posiciones de los nodos en la matriz.
+ *
+ * Esta función asigna un identificador único a cada nodo en la matriz, basado en su posición de fila y columna.
+ * El identificador se calcula como `id = idRow * colums + idColum + 1`.
+ *
+ * La función recorre la matriz y actualiza el valor del identificador para cada nodo.
+ * @param none.
+ * @return none.
+ */
 void pathFindingList::definePos(){
     pathFindingNode *aux=head;
     pathFindingNode *aux1=head;
@@ -75,6 +95,15 @@ void pathFindingList::definePos(){
         i++;
     }
 }
+/**
+ * @brief Muestra los nodos en la matriz.
+ *
+ * Esta función recorre la matriz y muestra los nodos en las listas "open" y "close".
+ * Crea una cadena de texto con los identificadores de los nodos en la lista "open"
+ * y otra cadena de texto con los identificadores de los nodos en la lista "close".
+ * @param none.
+ * @return none.
+ */
 void pathFindingList::show(){
     pathFindingNode *aux=head;
     pathFindingNode *aux1=head;
@@ -101,7 +130,18 @@ void pathFindingList::show(){
     qDebug()<<"openList: "<<openList;
     qDebug()<<"closeList: "<<closeList;
 }
-
+/**
+ * @brief Define la función heurística (h) para cada nodo en la matriz.
+ *
+ * Esta función calcula el valor heurístico para cada nodo en la matriz en función de su posición y la posición del nodo final.
+ * El valor heurístico se calcula como la suma de la distancia vertical y la distancia horizontal entre el nodo y el nodo final.
+ * El cálculo se realiza utilizando la función qAbs() para obtener el valor absoluto.
+ *
+ * La función recorre la matriz y actualiza el valor heurístico para cada nodo.
+ * @param xF La posición X del nodo final.
+ * @param yF La posición Y del nodo final.
+ * @return none.
+ */
 void pathFindingList:: defineH(int xF, int yF){
     pathFindingNode *aux=head;
     pathFindingNode *aux1=head;
@@ -118,6 +158,17 @@ void pathFindingList:: defineH(int xF, int yF){
         i++;
     }
 }
+/**
+ * @brief Encuentra la ruta desde un nodo inicial hasta un nodo final utilizando el algoritmo de búsqueda A*.
+ *
+ * Esta función encuentra la ruta desde un nodo inicial hasta un nodo final utilizando el algoritmo de búsqueda A*.
+ * La función calcula los valores de g (costo acumulado), h (heurística) y f (suma de g y h) para cada nodo en el proceso de búsqueda.
+ * El algoritmo se ejecuta hasta que se encuentra la ruta o se agota la lista de nodos abiertos.
+ *
+ * @param beginning El identificador del nodo inicial.
+ * @param final El identificador del nodo final.
+ * @return none.
+ */
 void pathFindingList:: findRoute(int beggining, int final){
     int xB=-1, yB;
     int xF=-1, yF;
@@ -266,7 +317,14 @@ void pathFindingList:: findRoute(int beggining, int final){
         }
     }
 }
-
+/**
+ * @brief Encuentra un nodo en la matriz por su identificador.
+ *
+ * Esta función busca un nodo en la matriz basándose en su identificador y devuelve un puntero al nodo encontrado.
+ *
+ * @param id El identificador del nodo a buscar.
+ * @return Un puntero al nodo encontrado, o nullptr si no se encontró ningún nodo con el identificador dado.
+ */
 pathFindingNode* pathFindingList:: findNode(int id){
     pathFindingNode *aux=head;
     pathFindingNode *aux1=head;
@@ -284,6 +342,15 @@ pathFindingNode* pathFindingList:: findNode(int id){
     }
     return aux;
 }
+/**
+ * @brief Restablece los valores de los nodos en la matriz.
+ *
+ * Esta función restablece los valores de los nodos en la matriz, estableciendo las banderas "closed" y "opened" en falso,
+ * y reiniciando los valores de "f", "g", "h" y "parent" a cero o nulo.
+ *
+ * @param none.
+ * @return none.
+ */
 void pathFindingList::makeItTrue(){
     pathFindingNode *aux=head;
     pathFindingNode *aux1=head;
@@ -304,6 +371,15 @@ void pathFindingList::makeItTrue(){
         i++;
     }
 }
+/**
+ * @brief Libera la memoria utilizada por los nodos en la matriz.
+ *
+ * Esta función recorre la matriz y elimina cada nodo, liberando la memoria asignada.
+ * Al finalizar, establece el puntero `head` en nulo para indicar que la lista está vacía.
+ *
+ * @param none.
+ * @return none.
+ */
 
 void pathFindingList:: freeEveryThing(){
     pathFindingNode *aux=head;

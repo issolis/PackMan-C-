@@ -69,6 +69,13 @@ void widget::keyPressEvent(QKeyEvent *event)
             keyUnlocked=true;
     }
 }
+/**
+ * @brief Coloca una cantidad específica de bloques en la escena del widget.
+ *
+ * @param amount La cantidad de bloques a colocar en la escena.
+ *
+ * @return none
+ */
 void widget:: putBlocks(int amount){
     list.insert(amount);
     int i=0;
@@ -91,6 +98,20 @@ void widget:: putBlocks(int amount){
         i++;
     }
 }
+
+/**
+ * @brief Maneja el evento de clic para el botón de nivel 1.
+ *
+ * Oculta el botón de nivel 1, coloca los bloques en la escena,
+ * agrega los elementos del enemigo y el jugador a la escena,
+ * establece sus posiciones iniciales, coloca los puntos en la escena,
+ * inicia el movimiento del enemigo, controla el movimiento del jugador,
+ * verifica los puntos obtenidos, envía los puntos al servidor,
+ * verifica las colisiones y muestra una etiqueta en la interfaz.
+ *
+ * @param none
+ * @return none
+ */
 void widget::bL1_Clicked(){
     b_LevelI->hide();
     b_LevelI->setEnabled(false);
@@ -109,6 +130,22 @@ void widget::bL1_Clicked(){
     server();
     catched();
 }
+
+/**
+ * @brief Define la ruta para el primer enemigo.
+ *
+ * Crea una lista de búsqueda de ruta y construye una matriz.
+ * Configura los nodos de bloqueo y marcados según el nivel actual.
+ * Muestra la lista de búsqueda de ruta.
+ * Calcula la posición de conversión y obtiene la posición del jugador o el poder.
+ * Si el enemigo está escapando, se elige una posición aleatoria.
+ * Encuentra la ruta desde la posición de conversión hasta la posición objetivo.
+ * Guarda los identificadores de los nodos en una lista.
+ * Libera la memoria utilizada por la lista de búsqueda de ruta.
+ *
+ * @param None
+ * @return None
+ */
 void widget:: defineRouteFirstEnemy(){
     pathFindingList *list=new pathFindingList;
     list->buildMatrix(14,22);
@@ -165,6 +202,20 @@ void widget:: defineRouteFirstEnemy(){
     free(list );
     came=false;
 }
+/**
+ * @brief Define la ruta para el segundo enemigo.
+ *
+ * Crea una lista de búsqueda de ruta y construye una matriz.
+ * Configura los nodos de bloqueo y marcados según el nivel actual.
+ * Calcula la posición de conversión y obtiene la posición del jugador o el poder.
+ * Si el enemigo está escapando, se elige una posición aleatoria.
+ * Encuentra la ruta desde la posición de conversión hasta la posición objetivo.
+ * Guarda los identificadores de los nodos en una lista.
+ * Libera la memoria utilizada por la lista de búsqueda de ruta.
+ *
+ * @param None
+ * @return None
+ */
 void widget:: defineRouteSecondEnemy(){
     pathFindingList *list=new pathFindingList;
     list->buildMatrix(15,22);
@@ -220,6 +271,11 @@ void widget:: defineRouteSecondEnemy(){
     free(list );
     came1=false;
 }
+/**
+ * @brief Define la ruta para el tercer enemigo.
+ * @param none.
+ * @return none.
+ */
 void widget::defineRouteThirdEnemy(){
     const int N = 22;
     const int m = 15;
@@ -296,6 +352,18 @@ void widget::defineRouteThirdEnemy(){
     came2=false;
     ended1=true;
 }
+/**
+ * @brief Define la ruta para el cuarto enemigo.
+ *
+ * Esta función define la ruta para el cuarto enemigo en el juego.
+ * Utiliza una matriz de nivel predefinida para establecer el diseño del nivel.
+ * Luego, encuentra el camino más corto desde la posición del enemigo hasta la posición del objetivo.
+ * El objetivo puede ser la posición del personaje principal (Pacman) o una posición de poder,
+ * dependiendo de las condiciones del juego.
+ * Finalmente, almacena la lista de IDs de los nodos del camino más corto.
+ * @param none.
+ * @return none.
+ */
 void widget::defineRouteFourthEnemy(){
     const int N = 22;
     const int m = 15;
@@ -332,6 +400,17 @@ void widget::defineRouteFourthEnemy(){
     came3=false;
     ended1=true;
 }
+/**
+ * @brief Mueve al primer enemigo.
+ *
+ * Esta función se encarga de mover al primer enemigo en el juego.
+ * Utiliza un temporizador para controlar el movimiento periódico del enemigo.
+ * Si el nivel no ha sido superado, verifica si el enemigo ha llegado al final del camino
+ * o si debe definir una nueva ruta. En caso contrario, verifica si el enemigo ha sido atrapado
+ * por el personaje principal y realiza el movimiento correspondiente en el camino más corto.
+ * @param none.
+ * @return none.
+ */
 void widget::MoveFirstEnemy(){
     int x; int y;
     QTimer *timer = new QTimer();
@@ -360,6 +439,17 @@ void widget::MoveFirstEnemy(){
     });
     timer->start(250);
 }
+/**
+ * @brief Mueve al segundo enemigo.
+ *
+ * Esta función se encarga de mover al segundo enemigo en el juego.
+ * Utiliza un temporizador para controlar el movimiento periódico del enemigo.
+ * Si el nivel no ha sido superado, verifica si el enemigo ha llegado al final del camino
+ * o si debe definir una nueva ruta. En caso contrario, verifica si el enemigo ha sido atrapado
+ * por el personaje principal y realiza el movimiento correspondiente en el camino más corto.
+ * @param none.
+ * @return none.
+ */
 void widget::MoveSecondEnemy(){
     int x; int y;
     QTimer *timer = new QTimer();
@@ -415,6 +505,17 @@ void widget::MoveThirdEnemy(){
     });
     timer->start(200);
 }
+/**
+ * @brief Mueve al tercer enemigo.
+ *
+ * Esta función se encarga de mover al tercer enemigo en el juego.
+ * Utiliza un temporizador para controlar el movimiento periódico del enemigo.
+ * Si el nivel no ha sido superado, verifica si el enemigo ha llegado al final del camino
+ * o si debe definir una nueva ruta. En caso contrario, verifica si el enemigo ha sido atrapado
+ * por el personaje principal y realiza el movimiento correspondiente en el camino más corto.
+ * @param none.
+ * @return none.
+ */
 void widget::MoveFourthEnemy(){
 
     int x; int y;
@@ -445,6 +546,17 @@ void widget::MoveFourthEnemy(){
     timer->start(210);
 
 }
+/**
+ * @brief Genera un número aleatorio.
+ *
+ * Esta función genera un número aleatorio dentro de un rango específico.
+ * El número generado debe cumplir ciertas condiciones definidas por la función `noPutIt()`.
+ * La función utiliza un bucle while para generar y verificar continuamente números hasta encontrar
+ * uno que cumpla las condiciones establecidas. En caso contrario, se repite el proceso hasta encontrar
+ * un número válido.
+ * @param none.
+ * @return El número aleatorio generado.
+ */
 int widget::randNumber(){
     int i=0; bool again=false;
     while(true){
@@ -460,13 +572,43 @@ int widget::randNumber(){
             return rand;
     }
 }
+/**
+ * @brief Calcula la posición X adaptada a partir de un ID.
+ *
+ * Esta función recibe un ID como parámetro y calcula la posición X correspondiente.
+ * La posición X se adapta en base al ID proporcionado, utilizando una fórmula que
+ * considera la cantidad de columnas en el grid y el tamaño de cada celda.
+ *
+ * @param id El ID utilizado para calcular la posición X.
+ * @return La posición X adaptada.
+ */
 int widget::adapPosX(int id){
     int posX=-220+(id-1)%22*20;
     return posX;
 }
+/**
+ * @brief Calcula la posición Y adaptada a partir de un ID.
+ *
+ * Esta función recibe un ID como parámetro y calcula la posición Y correspondiente.
+ * La posición Y se adapta en base al ID proporcionado, utilizando una fórmula que
+ * considera la cantidad de columnas en el grid y el tamaño de cada celda.
+ *
+ * @param id El ID utilizado para calcular la posición Y.
+ * @return La posición Y adaptada.
+ */
 int widget::adapPosY(int id){
     return -140+(id-1)/22*20;
 }
+/**
+ * @brief Mueve al jugador en la dirección especificada.
+ *
+ * Esta función se encarga de mover al jugador (pacman) en la dirección especificada.
+ * Utiliza un temporizador para realizar los movimientos en intervalos de tiempo regulares.
+ * El movimiento se realiza de acuerdo a la dirección almacenada en la variable "direcction".
+ *
+ * @param none.
+ * @return none.
+ */
 void widget::movePlayer(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
@@ -507,6 +649,16 @@ void widget::movePlayer(){
     );
     timer->start(275);
 }
+/**
+ * @brief Coloca los puntos en el escenario de juego.
+ *
+ * Esta función se encarga de colocar los puntos en el escenario de juego.
+ * Recorre un rango de índices y verifica si se puede colocar un punto en esa posición.
+ * La verificación se realiza utilizando la función noPutIt() y el nivel actual del juego.
+ * Los puntos se colocan en las posiciones adecuadas utilizando las coordenadas adaptadas.
+ * @param none.
+ * @return none.
+ */
 void widget:: colocatePoints(){
     int i=0;
     int j=0;
@@ -552,6 +704,18 @@ bool widget:: noPutIt(int level, int ID){
     }
     return false;
 }
+/**
+ * @brief Verifica si el jugador ha recogido puntos.
+ *
+ * Esta función se encarga de verificar si el jugador ha recogido algún punto.
+ * Utiliza un temporizador para verificar periódicamente la posición del jugador
+ * en relación con la posición de los puntos. Si el jugador está en la misma posición
+ * que un punto, se realiza el procesamiento correspondiente. Se cambia la imagen del punto,
+ * se actualiza el contador de puntos y se realizan acciones adicionales dependiendo de la situación.
+ *
+ *@param none.
+ *@return none.
+ */
 void widget:: checkPoints(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
@@ -708,6 +872,17 @@ void widget:: checkPoints(){
     );
     timer->start(150);
 }
+/**
+ * @brief Función del servidor para recibir y procesar las entradas del cliente.
+ *
+ * Esta función se encarga de establecer un temporizador para recibir y procesar las
+ * entradas del cliente. Utiliza un objeto `QTimer` para realizar esta tarea de manera
+ * periódica. Cuando se recibe una entrada del cliente, se verifica si el teclado del
+ * juego está desbloqueado (`keyUnlocked`). Si está desbloqueado y se recibe una entrada
+ * válida, se actualiza la dirección del jugador (`direcction`) según la entrada recibida.
+ *@param none.
+ *@return none.
+ */
 void widget:: server(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
@@ -732,6 +907,18 @@ void widget:: server(){
     });
     timer->start();
 }
+/**
+ * @brief Función para verificar las colisiones entre el personaje y los enemigos.
+ *
+ * Esta función establece un temporizador para verificar periódicamente si el personaje
+ * (`pacman`) ha colisionado con alguno de los enemigos (`enemy1`, `enemy2`, `enemy3`,
+ * `enemy4`). Si hay una colisión y los enemigos no están escapando (`enemiesScaping`),
+ * se decrementa la cantidad de vidas (`lifes`) y se reposiciona al personaje en una
+ * posición aleatoria. Si las vidas llegan a cero, se muestra un mensaje de "Perdiste" y
+ * se cierra la ventana del juego después de 5 segundos.
+ * @param none.
+ * @return none.
+ */
 void widget:: checkCollision(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
@@ -779,6 +966,16 @@ void widget:: checkCollision(){
     });
     timer->start(10);
 }
+/**
+ * @brief Función para mostrar una etiqueta con información del juego.
+ *
+ * Esta función establece un temporizador para actualizar periódicamente una etiqueta
+ * que muestra información del juego. La etiqueta incluye la cantidad de vidas
+ * (`lifes`), el nivel actual (`level`) y la cantidad total de puntos (`totalPoints`).
+ *
+ * @param none.
+ * @return none.
+ */
 void widget:: label(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
@@ -790,6 +987,17 @@ void widget:: label(){
     });
     timer->start(10);
 }
+/**
+ * @brief Función para verificar si el poder ha sido capturado por el jugador o ha afectado a los enemigos.
+ *
+ * Esta función establece un temporizador para verificar periódicamente si el poder ha sido capturado por el jugador
+ * o ha afectado a los enemigos. Si el poder ha sido capturado por un enemigo, se establece la posición del poder
+ * fuera de la escena. Si el jugador está en la misma posición que el poder, se activa un temporizador de escape para
+ * los enemigos durante 10 segundos.
+ *
+ *@param none.
+ *@return none.
+ */
 void widget:: catched(){
     QTimer *timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, [&]() {
@@ -812,6 +1020,16 @@ void widget:: catched(){
     });
     timer->start(10);
 }
+/**
+ * @brief Función para hacer desaparecer al enemigo 1 temporalmente.
+ *
+ * Esta función oculta el objeto `item` (que representa al enemigo 1) durante 5 segundos y luego lo vuelve a mostrar.
+ * Además, restablece la bandera `enemy1Catched` a `false`, indicando que el enemigo 1 no ha sido capturado.
+ *
+ * @param item El objeto `QGraphicsPixmapItem` que representa al enemigo 1.
+ *
+ * @return none.
+ */
 void widget:: desapairEnemy1(QGraphicsPixmapItem *item){
     int x=0;
     while(came && x!=150){
@@ -824,6 +1042,16 @@ void widget:: desapairEnemy1(QGraphicsPixmapItem *item){
         enemy1Catched=false;
     });
 }
+/**
+ * @brief Función para hacer desaparecer al enemigo 2 temporalmente.
+ *
+ * Esta función oculta el objeto `item` (que representa al enemigo 2) durante 5 segundos y luego lo vuelve a mostrar.
+ * Además, restablece la bandera `enemy1Catched` a `false`, indicando que el enemigo 1 no ha sido capturado.
+ *
+ * @param item El objeto `QGraphicsPixmapItem` que representa al enemigo 2.
+ *
+ * @return none.
+ */
 void widget:: desapairEnemy2(QGraphicsPixmapItem *item){
     item->hide();
     QTimer::singleShot(5000, [=]() {
@@ -831,6 +1059,16 @@ void widget:: desapairEnemy2(QGraphicsPixmapItem *item){
         enemy2Catched=false;
     });
 }
+/**
+ * @brief Función para hacer desaparecer al enemigo 3 temporalmente.
+ *
+ * Esta función oculta el objeto `item` (que representa al enemigo 3) durante 5 segundos y luego lo vuelve a mostrar.
+ * Además, restablece la bandera `enemy1Catched` a `false`, indicando que el enemigo 1 no ha sido capturado.
+ *
+ * @param item El objeto `QGraphicsPixmapItem` que representa al enemigo 3.
+ *
+ * @return none.
+ */
 void widget:: desapairEnemy3(QGraphicsPixmapItem *item){
     item->hide();
     QTimer::singleShot(5000, [=]() {
@@ -838,6 +1076,16 @@ void widget:: desapairEnemy3(QGraphicsPixmapItem *item){
         enemy3Catched=false;
     });
 }
+/**
+ * @brief Función para hacer desaparecer al enemigo 4 temporalmente.
+ *
+ * Esta función oculta el objeto `item` (que representa al enemigo 4) durante 5 segundos y luego lo vuelve a mostrar.
+ * Además, restablece la bandera `enemy1Catched` a `false`, indicando que el enemigo 1 no ha sido capturado.
+ *
+ * @param item El objeto `QGraphicsPixmapItem` que representa al enemigo 4.
+ *
+ * @return none.
+ */
 void widget:: desapairEnemy4(QGraphicsPixmapItem *item){
     item->hide();
     QTimer::singleShot(5000, [=]() {
@@ -845,21 +1093,36 @@ void widget:: desapairEnemy4(QGraphicsPixmapItem *item){
         enemy4Catched=false;
     });
 }
+/**
+ * @brief Función para enviar los puntos y las vidas al cliente a través del socket.
+ *
+ * Esta función configura un temporizador que enviará periódicamente los puntos y las vidas al cliente.
+ * La función `sendLifes` se conecta a la señal `timeout` del temporizador y se encargará de enviar los datos.
+ * @param none.
+ * @return none.
+ */
 void widget::sendPoints()
 {
     QTimer* timer;
     timer = new QTimer(this);
 
-    // Conectar el temporizador al método sendLifes()
+
     connect(timer, &QTimer::timeout, this, &widget::sendLifes);
 
-    // Establecer el intervalo de tiempo en milisegundos (por ejemplo, 1000 ms = 1 segundo)
+
     s:
     timer->start(50);
 }
-
-    void widget::sendLifes()
-    {
+    /**
+ * @brief Función para enviar las vidas y los puntos al cliente a través del socket.
+ *
+ * Esta función construye una cadena de texto que contiene la información de las vidas y los puntos.
+ * Luego, verifica si el socket del objeto `Server1` está abierto y, en caso afirmativo, envía la cadena de texto al cliente.
+ * Si el socket no está abierto, muestra un mensaje de error.
+ * @param none.
+ * @return none.
+ */
+void widget::sendLifes(){
     QString st = "lifes:"  + lifes.toString() + ";points:" + totalPoints.toString();
 
     if (Server1->socket->isOpen()) {
@@ -868,5 +1131,5 @@ void widget::sendPoints()
     } else {
         qDebug() << "Error: El socket no está abierto";
     }
-    }
+}
 
